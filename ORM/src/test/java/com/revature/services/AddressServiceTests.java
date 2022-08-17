@@ -17,9 +17,9 @@ public class AddressServiceTests {
 	private Address testAddress = new Address("157 Grain", "Unit 10", "Houston", "75757");
 	
 	@Test
-	public void testFindByTitle() {
+	public void testFindByCity() {
 		Mockito.when(mockRepo.getAddressByCityFromDB("Raleigh"))
-			.thenReturn(new Address("555 Alpha", "8B", "Carson", "43454"));
+			.thenReturn(new Address("157 Grain", "Unit 10", "Houston", "75757"));
 		Address a = bookService.getAddressByCity("Raleigh");
 		assertEquals(testAddress, a);
 	}
