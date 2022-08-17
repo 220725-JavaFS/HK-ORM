@@ -81,7 +81,23 @@ public class Address implements Comparable<Address>{
 	}
 	@Override
 	public int compareTo(Address o) {
-		// TODO Auto-generated method stub
+		int i = this.Street.compareTo(o.Street);
+		if(i!=0) {
+			return i;
+		}
+		i = this.Apartment.compareTo(o.Apartment);
+		if(i!=0) {
+			return i;
+		}
+		i = this.City.compareTo(o.City);
+		if(i!=0) {
+			return i;
+		}
+		
+		i = this.Zip.compareTo(o.Zip);
+		if(i!=0) {
+			return i;
+		}
 		return 0;
 	}
 	
