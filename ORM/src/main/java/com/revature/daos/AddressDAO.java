@@ -10,6 +10,6 @@ public interface AddressDAO {
 	public abstract Address getSingleAddressByID(int id);
 	public abstract Address getAddressByCity(String City);	
 	List<Address> getAllAddress();
-	public abstract void insertAddress(Address address);	
-	public abstract void deleteAddress(int id);
+	public abstract void insertAddress(Address address);		
+	void deleteAddress(Address address);
 }
