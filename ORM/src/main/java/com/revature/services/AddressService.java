@@ -37,5 +37,12 @@ private AddressDAO addressDao = new AddressDaoImpl();
 	public void recruitAddress(Address address) {
 		addressDao.insertAddress(address);
 	}
+
+	public void DeleteAddress(Address address) {		
+		addressDao.deleteAddress(address);
+	}
+	public void updateAddress(Address address) {
+		addressDao.updateAddress(address);
+	}
 	
 }

@@ -18,7 +18,7 @@ public class AddressDaoImpl implements AddressDAO {
 	
 	public Address getSingleAddressByID(int id) {
 		try(Connection conn = ConnectionUtil.getConnection()){
-			String sql = "";
+			String sql = "SELECT * FROM address_book WHERE address_id = " + id +";";
 			Statement statement = conn.createStatement();
 			ResultSet result = statement.executeQuery(sql);
 			
@@ -30,7 +30,8 @@ public class AddressDaoImpl implements AddressDAO {
 				result.getString("apartment_number"),
 				result.getString("city"),			
 				result.getString("zip")
-				);					
+				);		
+				System.out.println("Single address by ID\n\n");
 				return AccountObject;
 			}
 		}
@@ -42,11 +43,7 @@ public class AddressDaoImpl implements AddressDAO {
 	
 	public List<Address> getAllAddress() {
 		try(Connection conn = ConnectionUtil.getConnection()){
-			String sql = "SELECT * FROM customer_accounts LEFT JOIN accounts ON accounts.account_type = "
-					+ "customer_accounts.account_type LEFT JOIN account_status_admin ON account_status_admin.email ="
-					+ "customer_accounts.email "
-					+ "LEFT JOIN account_status_banker ON account_status_banker.phone_number = "
-					+ "customer_accounts.phone_number;";
+			String sql = "SELECT * FROM address_book";
 					
 			Statement statement = conn.createStatement();
 			ResultSet result = statement.executeQuery(sql);
@@ -63,6 +60,7 @@ public class AddressDaoImpl implements AddressDAO {
 						);												
 						accountList.add(AccountObject);
 					}		
+			System.out.println("This is all addresses");
 				return accountList;			
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -72,8 +70,8 @@ public class AddressDaoImpl implements AddressDAO {
 
 	public void insertAddress(Address address) {
 		try(Connection conn = ConnectionUtil.getConnection()){		
-			String sql = "INSERT INTO address (street, apartment, city, zip)" 
-						+ " VALUES (?,?,?,?,?,?);";		
+			String sql = "INSERT INTO address_book (street, apartment_number, city, zip)" 
+						+ " VALUES (?,?,?,?);";		
 		
 			PreparedStatement statement = conn.prepareStatement(sql);
 			
@@ -96,7 +94,7 @@ public class AddressDaoImpl implements AddressDAO {
 	public Address getAddressByCity(String City) {
 		try(Connection conn = ConnectionUtil.getConnection()){		
 			
-				String sql = "";
+				String sql = "SELECT * FROM address_book WHERE city = " + City +";";
 				Statement statement = conn.createStatement();
 				ResultSet result = statement.executeQuery(sql);
 				
@@ -109,6 +107,7 @@ public class AddressDaoImpl implements AddressDAO {
 					result.getString("city"),			
 					result.getString("zip")
 					);					
+					System.out.println("This is get address by city");
 					return AccountObject;
 			}
 						
@@ -122,14 +121,30 @@ public class AddressDaoImpl implements AddressDAO {
 	@Override
 	public void deleteAddress(Address address) {
 		try(Connection conn = ConnectionUtil.getConnection()){
-			String sql = "DELETE FROM address WHERE address_id = " + address.getAddressId() + ";";
+			String sql = "DELETE FROM address_book WHERE address_id = " + address.getAddressId() + ";";
 			PreparedStatement statement = conn.prepareStatement(sql);				
 			statement.execute();
 			
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}
-	
 		
 	}
+	
+	public void updateAddress(Address address) {
+		try(Connection conn = ConnectionUtil.getConnection()){
+			String sql = "UPDATE address_book SET city = " + "'" + address.getCity() + "'" + 
+					", street = "+ "'" + address.getStreet()+ "'" + 
+					", zip = " + "'"+ address.getZip() + "'" +
+					", apartment_number = " + "'" + address.getApartment() + "'" +
+					" WHERE address_id = "+ "'" + address.getAddressId()+ "'" + ";";
+			PreparedStatement statement = conn.prepareStatement(sql);			
+			statement.execute();
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+		
 }
