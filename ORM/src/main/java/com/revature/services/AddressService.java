@@ -37,10 +37,7 @@ private AddressRepo addressRepo;
 		this.addressRepo = bookRepo;
 	}
 
-	public AddressService() {
-		this.addressRepo = new AddressRepo();
-	}
-
+	
 	public Address getAddressByCity(String title) {
 		Address b = addressRepo.getAddressByCityFromDB(title);
 		return b;
